@@ -1,9 +1,8 @@
-CREATE DATABASE bookshelf;
-
-\c bookshelf;
-
+-- сначала создаём БД
+CREATE DATABASE bookshelf
+-- создаём таблицы после создания БД bookshelf
 CREATE TABLE  books (
-    id INTEGER SERIAL,
+    id SERIAL,
     name_book VARCHAR(50) NOT NULL,
     year INTEGER,
     link_file_description VARCHAR(100),
@@ -12,7 +11,7 @@ CREATE TABLE  books (
 );
 
 CREATE TABLE authors (
-    id INTEGER SERIAL,
+    id SERIAL,
     name_author VARCHAR(30) NOT NULL,
 
     PRIMARY KEY (id)
@@ -23,6 +22,6 @@ CREATE TABLE books_authors (
     author_id INT NOT NULL,
 
     PRIMARY KEY (book_id, author_id),
-    FOREIGN KEY (book_id) REFERENCES books(id) ON CASCADE DELETE,
-    FOREIGN KEY (book_id) REFERENCES authors(id) ON CASCADE DELETE
-)
+    FOREIGN KEY (book_id) REFERENCES books(id),
+    FOREIGN KEY (book_id) REFERENCES authors(id)
+);
