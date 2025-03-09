@@ -14,7 +14,6 @@ import java.util.List;
 @Setter
 @Getter
 @ToString
-@NoArgsConstructor
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -39,6 +38,10 @@ public class Book {
             , inverseJoinColumns = @JoinColumn(name="author_id")
     )
     private List<Author> authors;
+
+    public Book(){
+
+    }
 
     public Book(String name, int year, String file_path) {
         this.name = name;
