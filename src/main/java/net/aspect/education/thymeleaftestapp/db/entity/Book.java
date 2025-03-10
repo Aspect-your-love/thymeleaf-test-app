@@ -2,7 +2,6 @@ package net.aspect.education.thymeleaftestapp.db.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -49,7 +48,7 @@ public class Book {
         this.file_path = file_path;
     }
 
-    public void addAuthorToSection(Author author){
+    public void addAuthorToBook(Author author){
         if (authors == null) authors = new ArrayList<>();
 
         authors.add(author);
