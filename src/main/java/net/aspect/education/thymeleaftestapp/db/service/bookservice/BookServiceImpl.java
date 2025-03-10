@@ -1,5 +1,6 @@
 package net.aspect.education.thymeleaftestapp.db.service.bookservice;
 
+import jakarta.transaction.Transactional;
 import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class BookServiceImpl implements BookService{
     private BookRepository bookRepository;
 
     @Override
+    @Transactional
     public List<Book> getAllBook() {
         List<Book> allBook = bookRepository.findAll();
         System.out.println("Были найдены книги: "+ allBook);
@@ -22,6 +24,7 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
+    @Transactional
     public Book getBookById(int id) {
         Optional<Book> getBookOptional = bookRepository.findById(id);
 
@@ -32,11 +35,13 @@ public class BookServiceImpl implements BookService{
     }
 
     @Override
+    @Transactional
     public void saveOrUpdateBook(Book newBook) {
         bookRepository.save(newBook);
     }
 
     @Override
+    @Transactional
     public void deleteBookById(int id) {
         bookRepository.deleteById(id);
     }

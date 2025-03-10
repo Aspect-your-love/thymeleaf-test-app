@@ -8,5 +8,6 @@ public class ThymeleafTestAppApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(ThymeleafTestAppApplication.class, args);
+        Book
     }
 }
