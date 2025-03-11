@@ -26,7 +26,10 @@ public class AuthorServiceImpl implements AuthorService{
     @Transactional
     public Author getAuthorById(int id) {
         Optional<Author> authorCheck = authorRepository.findById(id);
-        if (authorCheck.isEmpty()) throw new NullPointerException(String.format("Author with %d not exist", id));
+
+        if (authorCheck.isEmpty())
+            throw new NullPointerException(String.format("Author with %d not exist", id));
+
         return authorCheck.get();
     }
 
