@@ -8,6 +8,6 @@ import java.util.Optional;
 public interface BookService {
     List<Book> getAllBook();
     Book getBookById(int id);
-    void saveOrUpdateBook(Book newBook);
+    Book saveOrUpdateBook(Book newBook);
     void deleteBookById(int id);
 }
