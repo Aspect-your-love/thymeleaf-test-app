@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-//TODO: добавить реализацию данного сервиса
 @Service
 public class AuthorServiceImpl implements AuthorService{
 
