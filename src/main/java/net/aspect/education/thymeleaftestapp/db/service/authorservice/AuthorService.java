@@ -4,6 +4,7 @@ import net.aspect.education.thymeleaftestapp.db.entity.Author;
 
 import java.util.List;
 
+
 public interface AuthorService {
     List<Author> getAllAuthor();
     Author getAuthorById(int id);
