@@ -44,4 +44,10 @@ public class AuthorServiceImpl implements AuthorService{
     public void deleteAuthorById(int id) {
         authorRepository.deleteById(id);
     }
+
+    // TODO: реализовать метод
+    @Override
+    public Author getAuthorByName(String name) {
+        return authorRepository.getAuthorByName(name);
+    }
 }
