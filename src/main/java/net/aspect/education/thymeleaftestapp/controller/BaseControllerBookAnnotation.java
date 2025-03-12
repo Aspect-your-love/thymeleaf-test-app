@@ -14,11 +14,15 @@ import java.util.List;
 @RequestMapping("/api")
 public class BaseControllerBookAnnotation {
 
-    @Autowired
-    private BookService bookService;
+
+    private final BookService bookService;
+    private final AuthorService authorService;
 
     @Autowired
-    private AuthorService authorService;
+    public BaseControllerBookAnnotation(BookService bookService, AuthorService authorService){
+        this.bookService = bookService;
+        this.authorService = authorService;
+    }
 
     @GetMapping("/books")
     public List<Book> showAllBooks(){
@@ -37,13 +41,13 @@ public class BaseControllerBookAnnotation {
     Для добавления использовать метод из entity Book.
     2) Также, проводить проверку на то, является ли поле Author пустым.*/
 
-    @PostMapping("/employees")
+    @PostMapping("/book")
     public void addBook(@RequestBody Book book){
+        if (book.getAuthors().isEmpty()) throw new NullPointerException(String.format("В книге %s нет авторов", book.getName()));
+        bookService.saveOrUpdateBook(book);
     }
 
     //TODO: HTTP метод для удаления книги.
 
     //TODO: HTTP метод для обновления существующей книги
-
-    //TODO:
 }
