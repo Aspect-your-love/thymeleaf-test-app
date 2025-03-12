@@ -1,5 +1,6 @@
 package net.aspect.education.thymeleaftestapp.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -7,6 +8,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Table(name="books")
 @Entity
@@ -36,6 +38,7 @@ public class Book {
             , joinColumns = @JoinColumn(name="book_id")
             , inverseJoinColumns = @JoinColumn(name="author_id")
     )
+    @JsonManagedReference
     private List<Author> authors;
 
     public Book(){
@@ -53,4 +56,10 @@ public class Book {
 
         authors.add(author);
     }
+
+    /*public List<AuthorDTO> getAuthorNames() {
+        return authors.stream()
+                .map(author -> new AuthorDTO(author.getName()))
+                .collect(Collectors.toList());
+    }*/
 }

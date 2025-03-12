@@ -1,5 +1,7 @@
 package net.aspect.education.thymeleaftestapp.db.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +23,7 @@ public class Author {
     @Column(name = "name_author")
     private String name;
 
+    // TODO: Проблема - JSON_IGNORE. Создать контроллер, а затем получить автора и его книги.
     @ManyToMany(cascade = {CascadeType.DETACH
             , CascadeType.MERGE
             , CascadeType.PERSIST
@@ -29,6 +32,7 @@ public class Author {
             , joinColumns = @JoinColumn(name="author_id")
             , inverseJoinColumns = @JoinColumn(name="book_id")
     )
+    @JsonIgnore
     private List<Book> books;
 
     public Author (String name) {
