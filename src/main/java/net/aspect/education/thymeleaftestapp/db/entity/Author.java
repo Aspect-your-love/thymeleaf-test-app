@@ -7,6 +7,7 @@ import lombok.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "authors")
@@ -43,5 +44,16 @@ public class Author {
         if (books == null) books = new ArrayList<>();
 
         books.add(book);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Author author)) return false;
+        return Objects.equals(name, author.name) && Objects.equals(books, author.books);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, books);
     }
 }
