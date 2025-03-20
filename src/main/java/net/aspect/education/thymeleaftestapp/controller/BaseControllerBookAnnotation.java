@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api")
@@ -16,14 +17,13 @@ public class BaseControllerBookAnnotation {
 
 
     private final BookService bookService;
-    private final AuthorService authorService;
 
     @Autowired
-    public BaseControllerBookAnnotation(BookService bookService, AuthorService authorService){
+    public BaseControllerBookAnnotation(BookService bookService){
         this.bookService = bookService;
-        this.authorService = authorService;
     }
 
+    //9 TODO: Исправить данный метод. Сделать так, чтобы возвращался список DTO.
     @GetMapping("/books")
     public List<Book> showAllBooks(){
         return bookService.getAllBook();
@@ -36,18 +36,26 @@ public class BaseControllerBookAnnotation {
 
     //TODO: добавить метод, который будет выводить книги по указанию автора
 
-    /*TODO:
+    /*TODO: Метод SaveOrUpdate работает неправильно
     1) Данный метод должен добавляться сразу и книгу, и автора. Без автора нельзя добавлять книгу.
     Для добавления использовать метод из entity Book.
     2) Также, проводить проверку на то, является ли поле Author пустым.*/
 
+    /*
     @PostMapping("/book")
     public void addBook(@RequestBody Book book){
         if (book.getAuthors().isEmpty()) throw new NullPointerException(String.format("В книге %s нет авторов", book.getName()));
         bookService.saveOrUpdateBook(book);
+    }*/
+
+    /// Данный метод удаляет книгу по заданному ID
+    @DeleteMapping("/book/{id}")
+    public void deleteBook(@PathVariable int id){
+
+        Book book = bookService.getBookById(id);
+
+        if (book == null) throw new NullPointerException("Нет такой книги.");
+
+        bookService.deleteBookById(id);
     }
-
-    //TODO: HTTP метод для удаления книги.
-
-    //TODO: HTTP метод для обновления существующей книги
 }

@@ -8,7 +8,7 @@ import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Objects;
 
 @Table(name="books")
 @Entity
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @ToString
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
@@ -28,7 +28,7 @@ public class Book {
     private int year;
 
     @Column(name="link_file_description")
-    private String file_path;
+    private String filePath;
 
     @ManyToMany(cascade = {CascadeType.DETACH
             , CascadeType.MERGE
@@ -38,17 +38,16 @@ public class Book {
             , joinColumns = @JoinColumn(name="book_id")
             , inverseJoinColumns = @JoinColumn(name="author_id")
     )
-    @JsonManagedReference
     private List<Author> authors;
 
     public Book(){
-
     }
 
-    public Book(String name, int year, String file_path) {
+    public Book(String name, int year, String filePath, List<Author> authors) {
         this.name = name;
         this.year = year;
-        this.file_path = file_path;
+        this.filePath = filePath;
+        this.authors = authors;
     }
 
     public void addAuthorToBook(Author author){
@@ -62,4 +61,15 @@ public class Book {
                 .map(author -> new AuthorDTO(author.getName()))
                 .collect(Collectors.toList());
     }*/
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Book book)) return false;
+        return year == book.year && Objects.equals(name, book.name) && Objects.equals(filePath, book.filePath) && Objects.equals(authors, book.authors);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, year, filePath, authors);
+    }
 }
