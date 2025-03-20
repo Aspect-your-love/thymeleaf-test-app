@@ -23,6 +23,7 @@ public class BaseControllerBookAnnotation {
         this.bookService = bookService;
     }
 
+    //9 TODO: Исправить данный метод. Сделать так, чтобы возвращался список DTO.
     @GetMapping("/books")
     public List<Book> showAllBooks(){
         return bookService.getAllBook();
@@ -47,6 +48,7 @@ public class BaseControllerBookAnnotation {
         bookService.saveOrUpdateBook(book);
     }*/
 
+    /// Данный метод удаляет книгу по заданному ID
     @DeleteMapping("/book/{id}")
     public void deleteBook(@PathVariable int id){
 
