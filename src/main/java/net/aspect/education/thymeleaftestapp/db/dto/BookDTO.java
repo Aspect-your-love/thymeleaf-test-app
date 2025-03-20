@@ -1,6 +1,7 @@
 package net.aspect.education.thymeleaftestapp.db.dto;
 
 import java.util.List;
+import java.util.Objects;
 
 public class BookDTO {
     private String name;
@@ -48,5 +49,16 @@ public class BookDTO {
                 ", file_path='" + filePath + '\'' +
                 ", authorsName=" + authorsName +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof BookDTO bookDTO)) return false;
+        return year == bookDTO.year && Objects.equals(name, bookDTO.name) && Objects.equals(filePath, bookDTO.filePath) && Objects.equals(authorsName, bookDTO.authorsName);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, year, filePath, authorsName);
     }
 }

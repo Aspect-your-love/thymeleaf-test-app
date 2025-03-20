@@ -17,14 +17,14 @@ import java.util.Objects;
 @NoArgsConstructor
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int id;
 
     @Column(name = "name_author")
     private String name;
 
-    // TODO: Проблема - JSON_IGNORE. Создать контроллер, а затем получить автора и его книги.
+    // TODO: Проблема - JSON_IGNORE. Создать контроллер, а затем получить автора и его книги. Через DTO.
     @ManyToMany(cascade = {CascadeType.DETACH
             , CascadeType.MERGE
             , CascadeType.PERSIST

@@ -17,7 +17,7 @@ import java.util.Objects;
 @ToString
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="id")
     private int id;
 
@@ -38,7 +38,6 @@ public class Book {
             , joinColumns = @JoinColumn(name="book_id")
             , inverseJoinColumns = @JoinColumn(name="author_id")
     )
-    @JsonManagedReference
     private List<Author> authors;
 
     public Book(){
