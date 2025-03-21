@@ -1,6 +1,7 @@
 package net.aspect.education.thymeleaftestapp.controller;
 
 import jakarta.annotation.PostConstruct;
+import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import net.aspect.education.thymeleaftestapp.db.service.authorservice.AuthorService;
@@ -25,7 +26,9 @@ public class BaseControllerBookAnnotation {
 
     //9 TODO: Исправить данный метод. Сделать так, чтобы возвращался список DTO.
     @GetMapping("/books")
-    public List<Book> showAllBooks(){
+    public List<BookDTO> showAllBooks(){
+
+        //!!! Возвращать DTO
         return bookService.getAllBook();
     }
 

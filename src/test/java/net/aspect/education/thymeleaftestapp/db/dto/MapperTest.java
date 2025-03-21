@@ -55,7 +55,6 @@ public class MapperTest {
 
     @Test
     public void testMappingToBookDTO(){
-        // TODO: реализовать тест из книги в DTO
         BookDTO bookDTOTest = mapper.toBookDTO(book1);
 
         assertThat(bookDTOTest).isEqualTo(bookDTO);

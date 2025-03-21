@@ -4,3 +4,5 @@
 2 </> - Разобраться, как избежать вечной рекурсии в ManyToMany отношениях.
 Аннотация @JsonIgnore может не помочь (не проверял), но всё же стоит попытаться разобраться через DTO:
 https://medium.com/@zubeyrdamar/java-spring-boot-handling-infinite-recursion-a95fe5a53c92
+
+3 - Когда возвращается весь список книг - возвращать DTO (сделано)

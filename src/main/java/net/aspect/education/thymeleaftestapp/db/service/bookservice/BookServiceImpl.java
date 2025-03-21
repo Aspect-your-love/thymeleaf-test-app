@@ -2,6 +2,8 @@ package net.aspect.education.thymeleaftestapp.db.service.bookservice;
 
 import jakarta.transaction.Transactional;
 import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
+import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
+import net.aspect.education.thymeleaftestapp.db.dto.Mapper;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,16 +17,20 @@ public class BookServiceImpl implements BookService {
 
     @Autowired
     private BookRepository bookRepository;
+    private Mapper mapper = new Mapper();
 
     /**
      * Получение всех книг из БД
      */
     @Override
     @Transactional
-    public List<Book> getAllBook() {
+    public List<BookDTO> getAllBook() {
         List<Book> allBook = bookRepository.findAll();
         System.out.println("Были найдены книги: " + allBook);
-        return allBook;
+
+        List<BookDTO> bookDTOList = allBook.stream().map(book -> mapper.toBookDTO(book)).toList();
+
+        return bookDTOList;
     }
 
     /**

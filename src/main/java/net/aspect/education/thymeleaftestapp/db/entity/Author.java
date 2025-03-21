@@ -13,7 +13,6 @@ import java.util.Objects;
 @Table(name = "authors")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Author {
     @Id
@@ -33,7 +32,6 @@ public class Author {
             , joinColumns = @JoinColumn(name="author_id")
             , inverseJoinColumns = @JoinColumn(name="book_id")
     )
-    @JsonIgnore
     private List<Book> books;
 
     public Author (String name) {
