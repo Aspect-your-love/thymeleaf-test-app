@@ -2,6 +2,7 @@ package net.aspect.education.thymeleaftestapp.controller;
 
 import jakarta.annotation.PostConstruct;
 import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
+import net.aspect.education.thymeleaftestapp.db.dto.Mapper;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import net.aspect.education.thymeleaftestapp.db.service.authorservice.AuthorService;
@@ -19,6 +20,8 @@ public class BaseControllerBookAnnotation {
 
     private final BookService bookService;
 
+    private Mapper mapper = new Mapper();
+
     @Autowired
     public BaseControllerBookAnnotation(BookService bookService){
         this.bookService = bookService;
@@ -33,7 +36,7 @@ public class BaseControllerBookAnnotation {
     }
 
     @GetMapping("/book/{id}")
-    public Book showBookById(@PathVariable("id") int id){
+    public BookDTO showBookById(@PathVariable("id") int id){
         return bookService.getBookById(id);
     }
 
@@ -44,21 +47,15 @@ public class BaseControllerBookAnnotation {
     Для добавления использовать метод из entity Book.
     2) Также, проводить проверку на то, является ли поле Author пустым.*/
 
-    /*
+
     @PostMapping("/book")
-    public void addBook(@RequestBody Book book){
-        if (book.getAuthors().isEmpty()) throw new NullPointerException(String.format("В книге %s нет авторов", book.getName()));
-        bookService.saveOrUpdateBook(book);
-    }*/
+    public void addBook(@RequestBody BookDTO book){
+        bookService.saveBook(book);
+    }
 
     /// Данный метод удаляет книгу по заданному ID
     @DeleteMapping("/book/{id}")
     public void deleteBook(@PathVariable int id){
-
-        Book book = bookService.getBookById(id);
-
-        if (book == null) throw new NullPointerException("Нет такой книги.");
-
         bookService.deleteBookById(id);
     }
 }

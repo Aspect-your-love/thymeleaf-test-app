@@ -1,10 +1,8 @@
 package net.aspect.education.thymeleaftestapp.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +27,11 @@ public class Book {
     @Column(name="link_file_description")
     private String filePath;
 
-    @ManyToMany(cascade = {CascadeType.DETACH
+    /*@ManyToMany(cascade = {CascadeType.DETACH
             , CascadeType.MERGE
             , CascadeType.PERSIST
-            , CascadeType.REFRESH})
+            , CascadeType.REFRESH})*/
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="books_authors"
             , joinColumns = @JoinColumn(name="book_id")
             , inverseJoinColumns = @JoinColumn(name="author_id")

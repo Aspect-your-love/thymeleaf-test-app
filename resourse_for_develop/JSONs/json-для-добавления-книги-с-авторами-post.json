@@ -1,0 +1,9 @@
+{
+  "name": "book-3",
+  "year": 1900,
+  "filePath": "file.path",
+  "authorsName": [
+    "Аниэла Яффе",
+    "Карл Густав Юнг"
+  ]
+}

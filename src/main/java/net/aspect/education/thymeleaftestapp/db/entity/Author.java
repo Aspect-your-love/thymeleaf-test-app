@@ -24,10 +24,11 @@ public class Author {
     private String name;
 
     // TODO: Проблема - JSON_IGNORE. Создать контроллер, а затем получить автора и его книги. Через DTO.
-    @ManyToMany(cascade = {CascadeType.DETACH
+    /*@ManyToMany(cascade = {CascadeType.DETACH
             , CascadeType.MERGE
             , CascadeType.PERSIST
-            , CascadeType.REFRESH})
+            , CascadeType.REFRESH})*/
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="books_authors"
             , joinColumns = @JoinColumn(name="author_id")
             , inverseJoinColumns = @JoinColumn(name="book_id")
