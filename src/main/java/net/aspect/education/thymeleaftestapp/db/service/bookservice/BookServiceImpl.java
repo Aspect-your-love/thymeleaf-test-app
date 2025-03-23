@@ -20,13 +20,16 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+    private final Mapper mapper;
 
-    private Mapper mapper = new Mapper();
-
+    /*Внедрение зависимостей происходит через конструктор*/
     @Autowired
-    public BookServiceImpl(BookRepository bookRepository, AuthorRepository authorRepository) {
+    public BookServiceImpl(BookRepository bookRepository
+            , AuthorRepository authorRepository
+            , Mapper mapper) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
+        this.mapper = mapper;
     }
 
     /**
@@ -67,6 +70,29 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public Book saveBook(BookDTO newBook) {
+
+        List<Author> authorsObj = newBook
+                .getAuthorsName()
+                .stream()
+                .distinct()
+                .map(
+                        authorName -> {
+                            Author currentAuthor = authorRepository.getAuthorByName(authorName);
+
+                            if (currentAuthor != null) {
+                                return currentAuthor;
+                            } else {
+                                return new Author(authorName);
+                            }
+                        }
+                )
+                .toList();
+
+        Book resultBook = mapper.toBook(newBook);
+        resultBook.setAuthors(authorsObj);
+//        authorsObj.forEach(resultBook::addAuthorToBook);
+
+        bookRepository.save(resultBook);
 
         return resultBook;
     }
