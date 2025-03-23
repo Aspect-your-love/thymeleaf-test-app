@@ -13,7 +13,6 @@ import java.util.Objects;
 @Table(name = "authors")
 @Getter
 @Setter
-@ToString
 @NoArgsConstructor
 public class Author {
     @Id
@@ -24,16 +23,17 @@ public class Author {
     @Column(name = "name_author")
     private String name;
 
-    // TODO: Проблема - JSON_IGNORE. Создать контроллер, а затем получить автора и его книги. Через DTO.
-    @ManyToMany(cascade = {CascadeType.DETACH
+    /**
+     * Доминирующая сторона над связью между
+     * books <-> authors*/
+    @ManyToMany(mappedBy = "authors",cascade = {CascadeType.DETACH
             , CascadeType.MERGE
             , CascadeType.PERSIST
             , CascadeType.REFRESH})
-    @JoinTable(name="books_authors"
-            , joinColumns = @JoinColumn(name="author_id")
-            , inverseJoinColumns = @JoinColumn(name="book_id")
-    )
-    @JsonIgnore
+    /*@JoinTable(name="books_authors"
+            , joinColumns = @JoinColumn(name="author_id", referencedColumnName="id")
+            , inverseJoinColumns = @JoinColumn(name="book_id", referencedColumnName="id")
+    )*/
     private List<Book> books;
 
     public Author (String name) {

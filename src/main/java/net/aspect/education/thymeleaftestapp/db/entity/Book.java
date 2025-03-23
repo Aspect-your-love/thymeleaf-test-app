@@ -1,10 +1,8 @@
 package net.aspect.education.thymeleaftestapp.db.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,7 +12,6 @@ import java.util.Objects;
 @Entity
 @Setter
 @Getter
-@ToString
 public class Book {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,8 +32,8 @@ public class Book {
             , CascadeType.PERSIST
             , CascadeType.REFRESH})
     @JoinTable(name="books_authors"
-            , joinColumns = @JoinColumn(name="book_id")
-            , inverseJoinColumns = @JoinColumn(name="author_id")
+            , joinColumns = @JoinColumn(name="book_id", referencedColumnName="id")
+            , inverseJoinColumns = @JoinColumn(name="author_id", referencedColumnName="id")
     )
     private List<Author> authors;
 
