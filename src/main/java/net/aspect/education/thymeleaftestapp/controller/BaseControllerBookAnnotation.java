@@ -30,8 +30,6 @@ public class BaseControllerBookAnnotation {
     //9 TODO: Исправить данный метод. Сделать так, чтобы возвращался список DTO.
     @GetMapping("/books")
     public List<BookDTO> showAllBooks(){
-
-        //!!! Возвращать DTO
         return bookService.getAllBook();
     }
 
@@ -39,14 +37,6 @@ public class BaseControllerBookAnnotation {
     public BookDTO showBookById(@PathVariable("id") int id){
         return bookService.getBookById(id);
     }
-
-    //TODO: добавить метод, который будет выводить книги по указанию автора
-
-    /*TODO: Метод SaveOrUpdate работает неправильно
-    1) Данный метод должен добавляться сразу и книгу, и автора. Без автора нельзя добавлять книгу.
-    Для добавления использовать метод из entity Book.
-    2) Также, проводить проверку на то, является ли поле Author пустым.*/
-
 
     @PostMapping("/book")
     public void addBook(@RequestBody BookDTO book){

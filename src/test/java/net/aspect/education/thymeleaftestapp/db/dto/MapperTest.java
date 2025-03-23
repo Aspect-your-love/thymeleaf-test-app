@@ -3,6 +3,7 @@ package net.aspect.education.thymeleaftestapp.db.dto;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.aspectj.lang.annotation.After;
+import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,7 @@ public class MapperTest {
         book1 = null;
     }
 
+
     @Test
     public void testMappingToBook(){
         BookDTO bookDTO = new BookDTO();
@@ -49,6 +51,7 @@ public class MapperTest {
                 .stream()
                 .map(Author::getName)
                 .collect(Collectors.toList()));
+        book1.setAuthors(new ArrayList<>());
 
         assertThat(mapper.toBook(bookDTO)).isEqualTo(book1);
     }
@@ -56,7 +59,7 @@ public class MapperTest {
     @Test
     public void testMappingToBookDTO(){
         BookDTO bookDTOTest = mapper.toBookDTO(book1);
-
         assertThat(bookDTOTest).isEqualTo(bookDTO);
     }
+
 }

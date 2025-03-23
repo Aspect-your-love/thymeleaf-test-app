@@ -4,6 +4,7 @@ import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -27,20 +28,16 @@ public class Mapper {
         return bookDTO;
     }
 
-    // TODO: Проверить данное преобразование
     /**
-     * Преобразует BookDTO в book. Вроде бы.*/
+     * Преобразует BookDTO в book.
+     * Но не преобразует строковые имена авторов в объекты Author.\
+     * Вместо этого устанавливает пустой лист*/
     public Book toBook(BookDTO bookDTO) {
         Book book = new Book();
         book.setName(bookDTO.getName());
         book.setYear(bookDTO.getYear());
         book.setFilePath(bookDTO.getFilePath());
-
-        bookDTO
-                .getAuthorsName()
-                .forEach(
-                        author -> book.addAuthorToBook(new Author(author))
-                );
+        book.setAuthors(new ArrayList<>());
 
         return book;
     }

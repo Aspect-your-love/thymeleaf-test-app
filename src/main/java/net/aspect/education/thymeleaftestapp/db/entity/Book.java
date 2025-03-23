@@ -53,12 +53,6 @@ public class Book {
         authors.add(author);
     }
 
-    /*public List<AuthorDTO> getAuthorNames() {
-        return authors.stream()
-                .map(author -> new AuthorDTO(author.getName()))
-                .collect(Collectors.toList());
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Book book)) return false;

@@ -26,7 +26,8 @@ public class Author {
     /**
      * Доминирующая сторона над связью между
      * books <-> authors*/
-    @ManyToMany(mappedBy = "authors",cascade = {CascadeType.DETACH
+    @ManyToMany(mappedBy = "authors"
+            ,cascade = {CascadeType.DETACH
             , CascadeType.MERGE
             , CascadeType.PERSIST
             , CascadeType.REFRESH})

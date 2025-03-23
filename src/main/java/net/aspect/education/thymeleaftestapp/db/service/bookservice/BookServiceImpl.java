@@ -65,8 +65,7 @@ public class BookServiceImpl implements BookService {
         return mapper.toBookDTO(getBookOptional.get());
     }
 
-
-    // TODO: не работает метод
+    /**Сохранение книги через DTO*/
     @Override
     @Transactional
     public Book saveBook(BookDTO newBook) {
@@ -89,8 +88,7 @@ public class BookServiceImpl implements BookService {
                 .toList();
 
         Book resultBook = mapper.toBook(newBook);
-        resultBook.setAuthors(authorsObj);
-//        authorsObj.forEach(resultBook::addAuthorToBook);
+        authorsObj.forEach(resultBook::addAuthorToBook);
 
         bookRepository.save(resultBook);
 
