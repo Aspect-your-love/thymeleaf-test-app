@@ -9,12 +9,10 @@ import java.util.List;
 
 
 public class AuthorDTO {
+    /// Имя автора
     private String name;
+    /// Названия книг, которые написаны автором
     private List<String> bookList;
-
-    public AuthorDTO(String name){
-        this.name = name;
-    }
 
     public String getName() {
         return name;
@@ -34,8 +32,9 @@ public class AuthorDTO {
 
     @Override
     public String toString() {
-        return "AuthorDTO[" +
+        return "AuthorDTO{" +
                 "name='" + name + '\'' +
-                ']';
+                ", bookList=" + bookList +
+                '}';
     }
 }
