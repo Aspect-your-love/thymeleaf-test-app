@@ -1,7 +1,7 @@
 package net.aspect.education.thymeleaftestapp.controller;
 
 import net.aspect.education.thymeleaftestapp.db.dto.AuthorDTO;
-import net.aspect.education.thymeleaftestapp.db.dto.Mapper;
+import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperBookWithoutAuthor;
 import net.aspect.education.thymeleaftestapp.db.service.authorservice.AuthorServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,12 +15,12 @@ public class AuthorAPIController {
 
     private final AuthorServiceImpl authorServiceImpl;
 
-    private final Mapper mapper;
+    private final MapperBookWithoutAuthor mapperBookWithoutAuthor;
 
     @Autowired
-    public AuthorAPIController(AuthorServiceImpl authorServiceImpl, Mapper mapper) {
+    public AuthorAPIController(AuthorServiceImpl authorServiceImpl, MapperBookWithoutAuthor mapperBookWithoutAuthor) {
         this.authorServiceImpl = authorServiceImpl;
-        this.mapper = mapper;
+        this.mapperBookWithoutAuthor = mapperBookWithoutAuthor;
     }
 
     public List<AuthorDTO> getAllAuthors(){

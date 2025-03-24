@@ -3,12 +3,10 @@ package net.aspect.education.thymeleaftestapp.db.service.bookservice;
 import jakarta.transaction.Transactional;
 import net.aspect.education.thymeleaftestapp.db.dao.author.AuthorRepository;
 import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
-import net.aspect.education.thymeleaftestapp.db.dto.AuthorDTO;
 import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
-import net.aspect.education.thymeleaftestapp.db.dto.Mapper;
+import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperBookWithoutAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
-import org.hibernate.sql.model.ast.builder.CollectionRowDeleteByUpdateSetNullBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,16 +18,16 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
-    private final Mapper mapper;
+    private final MapperBookWithoutAuthor mapperBookWithoutAuthor;
 
     /*Внедрение зависимостей происходит через конструктор*/
     @Autowired
     public BookServiceImpl(BookRepository bookRepository
             , AuthorRepository authorRepository
-            , Mapper mapper) {
+            , MapperBookWithoutAuthor mapperBookWithoutAuthor) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
-        this.mapper = mapper;
+        this.mapperBookWithoutAuthor = mapperBookWithoutAuthor;
     }
 
     /**
@@ -44,7 +42,7 @@ public class BookServiceImpl implements BookService {
         List<BookDTO> bookDTOList =
                 allBook
                         .stream()
-                        .map(book -> mapper.toBookDTO(book))
+                        .map(book -> mapperBookWithoutAuthor.toDTO(book))
                         .toList();
 
         return bookDTOList;
@@ -62,7 +60,7 @@ public class BookServiceImpl implements BookService {
             throw new NullPointerException(String.format("Object with %d not exist.", id));
 
 
-        return mapper.toBookDTO(getBookOptional.get());
+        return mapperBookWithoutAuthor.toDTO(getBookOptional.get());
     }
 
     /**Сохранение книги через DTO*/
@@ -87,7 +85,7 @@ public class BookServiceImpl implements BookService {
                 )
                 .toList();
 
-        Book resultBook = mapper.toBook(newBook);
+        Book resultBook = mapperBookWithoutAuthor.toEntity(newBook);
         authorsObj.forEach(resultBook::addAuthorToBook);
 
         bookRepository.save(resultBook);
@@ -101,7 +99,7 @@ public class BookServiceImpl implements BookService {
     @Override
     @Transactional
     public void deleteBookById(int id) {
-        Book book = mapper.toBook(this.getBookById(id));
+        Book book = mapperBookWithoutAuthor.toEntity(this.getBookById(id));
 
         if (book == null) throw new NullPointerException("Нет такой книги.");
 

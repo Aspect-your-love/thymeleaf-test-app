@@ -1,7 +1,6 @@
 package net.aspect.education.thymeleaftestapp.controller;
 
 import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
-import net.aspect.education.thymeleaftestapp.db.dto.Mapper;
 import net.aspect.education.thymeleaftestapp.db.service.bookservice.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,14 +14,12 @@ public class BookAPIController {
 
     private final BookService bookService;
 
-    private Mapper mapper = new Mapper();
 
     @Autowired
     public BookAPIController(BookService bookService){
         this.bookService = bookService;
     }
 
-    //9 TODO: Исправить данный метод. Сделать так, чтобы возвращался список DTO.
     @GetMapping("/allBooks")
     public List<BookDTO> showAllBooks(){
         return bookService.getAllBook();

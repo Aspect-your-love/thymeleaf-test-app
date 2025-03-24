@@ -1,17 +1,23 @@
-package net.aspect.education.thymeleaftestapp.db.dto;
+package net.aspect.education.thymeleaftestapp.db.dto.mapper;
 
+import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Мапер.
+ * Служит для преобразования объекта Book в BookDTO.
+ * Используется в основном в <b>@Service слое</b> */
 @Component
-public class Mapper {
+public class MapperBookWithoutAuthor implements Mapper<Book, BookDTO> {
 
-    /**Вроде бы преобразует Book в DTO*/
-    public BookDTO toBookDTO(Book book) {
+    /**
+     * Преобразует Book в DTO.<br>
+     * Также, преобразует авторов в список имён (String)*/
+    public BookDTO toDTO(Book book) {
         BookDTO bookDTO = new BookDTO();
         bookDTO.setName(book.getName());
         bookDTO.setYear(book.getYear());
@@ -29,15 +35,13 @@ public class Mapper {
     }
 
     /**
-     * Преобразует BookDTO в book.
-     * Но не преобразует строковые имена авторов в объекты Author.\
-     * Вместо этого устанавливает пустой лист*/
-    public Book toBook(BookDTO bookDTO) {
+     * Преобразует BookDTO в book.<br>
+     * Но не преобразует строковые имена авторов в объекты Author.<br>*/
+    public Book toEntity(BookDTO bookDTO) {
         Book book = new Book();
         book.setName(bookDTO.getName());
         book.setYear(bookDTO.getYear());
         book.setFilePath(bookDTO.getFilePath());
-        book.setAuthors(new ArrayList<>());
 
         return book;
     }

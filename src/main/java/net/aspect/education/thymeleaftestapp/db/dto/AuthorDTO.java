@@ -5,9 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
+
 
 public class AuthorDTO {
     private String name;
+    private List<String> bookList;
 
     public AuthorDTO(String name){
         this.name = name;
@@ -19,6 +22,14 @@ public class AuthorDTO {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public List<String> getBookList() {
+        return bookList;
+    }
+
+    public void setBookList(List<String> bookList) {
+        this.bookList = bookList;
     }
 
     @Override

@@ -1,9 +1,8 @@
 package net.aspect.education.thymeleaftestapp.db.dto;
 
+import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperBookWithoutAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
-import org.aspectj.lang.annotation.After;
-import org.junit.Ignore;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -14,10 +13,10 @@ import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
-public class MapperTest {
+public class MapperBookWithoutAuthorTest {
     private Book book1 ;
     private List<Author> authors;
-    private final Mapper mapper = new Mapper();
+    private final MapperBookWithoutAuthor mapperBookWithoutAuthor = new MapperBookWithoutAuthor();
     private BookDTO bookDTO;
 
     @BeforeEach
@@ -53,12 +52,12 @@ public class MapperTest {
                 .collect(Collectors.toList()));
         book1.setAuthors(new ArrayList<>());
 
-        assertThat(mapper.toBook(bookDTO)).isEqualTo(book1);
+        assertThat(mapperBookWithoutAuthor.toEntity(bookDTO)).isEqualTo(book1);
     }
 
     @Test
     public void testMappingToBookDTO(){
-        BookDTO bookDTOTest = mapper.toBookDTO(book1);
+        BookDTO bookDTOTest = mapperBookWithoutAuthor.toDTO(book1);
         assertThat(bookDTOTest).isEqualTo(bookDTO);
     }
 
