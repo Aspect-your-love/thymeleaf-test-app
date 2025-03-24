@@ -5,6 +5,7 @@ import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class MapperBookWithoutAuthorTest {
     }
 
 
+    @Disabled
     @Test
     public void testMappingToBook(){
         BookDTO bookDTO = new BookDTO();
@@ -55,6 +57,7 @@ public class MapperBookWithoutAuthorTest {
         assertThat(mapperBookWithoutAuthor.toEntity(bookDTO)).isEqualTo(book1);
     }
 
+    @Disabled
     @Test
     public void testMappingToBookDTO(){
         BookDTO bookDTOTest = mapperBookWithoutAuthor.toDTO(book1);

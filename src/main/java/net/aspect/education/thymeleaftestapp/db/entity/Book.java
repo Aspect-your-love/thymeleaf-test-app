@@ -21,7 +21,7 @@ public class Book {
     @Column(name="name_book")
     private String name;
 
-    @Column(name="year")
+    @Column(name="publication_year")
     private int year;
 
     @Column(name="link_file_description")

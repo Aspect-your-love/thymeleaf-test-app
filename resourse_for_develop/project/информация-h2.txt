@@ -1,0 +1,5 @@
+Если мы хотим сохранить БД
+spring.datasource.url=jdbc:h2:file:/data/demo
+
+Если мы хотим, чтобы БД была НОВОЙ ПРИ КАЖДОМ запуске.
+spring.datasource.url=jdbc:h2:mem:testdb
