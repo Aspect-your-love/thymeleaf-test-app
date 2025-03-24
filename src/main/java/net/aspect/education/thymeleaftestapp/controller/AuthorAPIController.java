@@ -24,7 +24,6 @@ public class AuthorAPIController {
     }
 
     public List<AuthorDTO> getAllAuthors(){
-        /*TODO:// написать сервис, который будет преобразовывать всех авторов в DTO.*/
         return null;
     }
 }
