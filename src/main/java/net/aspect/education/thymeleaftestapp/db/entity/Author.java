@@ -23,25 +23,23 @@ public class Author {
     @Column(name = "name_author")
     private String name;
 
-    /**
-     * Доминирующая сторона над связью между
-     * books <-> authors*/
     @ManyToMany(mappedBy = "authors"
-            ,cascade = {CascadeType.DETACH
+            , cascade = {CascadeType.DETACH
             , CascadeType.MERGE
             , CascadeType.PERSIST
-            , CascadeType.REFRESH})
+            , CascadeType.REFRESH}
+            , fetch = FetchType.EAGER)
     /*@JoinTable(name="books_authors"
             , joinColumns = @JoinColumn(name="author_id", referencedColumnName="id")
             , inverseJoinColumns = @JoinColumn(name="book_id", referencedColumnName="id")
     )*/
     private List<Book> books;
 
-    public Author (String name) {
+    public Author(String name) {
         this.name = name;
     }
 
-    public void addBookToAuthor(Book book){
+    public void addBookToAuthor(Book book) {
         if (books == null) books = new ArrayList<>();
 
         books.add(book);
