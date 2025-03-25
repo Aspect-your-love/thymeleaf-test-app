@@ -68,16 +68,17 @@ public class BookServiceImpl implements BookService {
     @Transactional
     public Book saveBook(BookDTO newBook) {
 
+        // TODO: маппинг переделать
         List<Author> authorsObj = newBook
                 .getAuthorsName()
                 .stream()
                 .distinct()
                 .map(
                         authorName -> {
-                            Author currentAuthor = authorRepository.getAuthorByName(authorName);
+                            List<Author> currentAuthor = authorRepository.getAuthorByName(authorName);
 
                             if (currentAuthor != null) {
-                                return currentAuthor;
+                                return currentAuthor.getFirst();
                             } else {
                                 return new Author(authorName);
                             }
