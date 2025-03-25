@@ -47,7 +47,7 @@ public class AuthorServiceImpl implements AuthorService{
 
     // TODO: реализовать метод
     @Override
-    public Author getAuthorByName(String name) {
+    public List<Author> getAuthorByName(String name) {
         return authorRepository.getAuthorByName(name);
     }
 }
