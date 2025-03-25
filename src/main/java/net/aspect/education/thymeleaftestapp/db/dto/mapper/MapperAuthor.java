@@ -3,8 +3,9 @@ package net.aspect.education.thymeleaftestapp.db.dto.mapper;
 import net.aspect.education.thymeleaftestapp.db.dto.AuthorDTO;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
+import org.springframework.stereotype.Component;
 
-
+@Component
 public class MapperAuthor implements Mapper<Author, AuthorDTO> {
 
     @Override
