@@ -5,6 +5,7 @@ import net.aspect.education.thymeleaftestapp.db.dao.author.AuthorRepository;
 import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
+import org.junit.Assert;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,11 +20,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes={
         net.aspect.education.thymeleaftestapp.ThymeleafTestAppApplication.class})
-@SuppressWarnings({"unused", "hiding"})
 public class AuthorDaoTest {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
+
 
     private Author author1;
     private Author author2;
@@ -52,9 +53,9 @@ public class AuthorDaoTest {
 
     @BeforeEach
     public void addAuthorsAndBooksEntity(){
-        author1 = new Author("author1");
-        author2 = new Author("author2");
-        author3 = new Author("author3");
+        author1 = new Author("Author-1");
+        author2 = new Author("Author-2");
+        author3 = new Author("Author-3");
 
         /* Добавить книги*/
     }
@@ -72,11 +73,17 @@ public class AuthorDaoTest {
         book3 = null;
     }
 
-    // Просто добавил тест.
+    /// Получение всех авторов
     @Transactional
     @Test
-    @Disabled
     public void getAuthors(){
+        authorRepository.save(author1);
+        authorRepository.save(author2);
+
+        List<Author> authorsList = authorRepository.findAll();
+        authorsList.forEach(author -> System.out.println(author.getName()));
+
+        assertThat(authorsList).contains(author1, author2);
 
     }
 
