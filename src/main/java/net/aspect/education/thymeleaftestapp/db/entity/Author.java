@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @Table(name = "authors")
@@ -32,26 +30,35 @@ public class Author {
             , joinColumns = @JoinColumn(name="author_id", referencedColumnName="id")
             , inverseJoinColumns = @JoinColumn(name="book_id", referencedColumnName="id")
     )
-    private List<Book> books;
+    private Set<Book> books;
 
     public Author(String name) {
         this.name = name;
     }
 
     public void addBookToAuthor(Book book) {
-        if (books == null) books = new ArrayList<>();
+        if (books == null) books = new HashSet<>();
 
         books.add(book);
+    }
+
+    public void removeBookAssociations(Book removeBook){
+        this.books.remove(removeBook);
+        removeBook.getAuthors().remove(this);
+    }
+
+    public void removeBookList(){
+        books.clear();
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Author author)) return false;
-        return Objects.equals(name, author.name) && Objects.equals(books, author.books);
+        return Objects.equals(name, author.name);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, books);
+        return Objects.hashCode(name);
     }
 }

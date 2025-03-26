@@ -5,6 +5,8 @@ import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.springframework.stereotype.Component;
 
+import java.util.stream.Collectors;
+
 @Component
 public class MapperAuthor implements Mapper<Author, AuthorDTO> {
 
@@ -16,7 +18,7 @@ public class MapperAuthor implements Mapper<Author, AuthorDTO> {
                 .getBooks()
                 .stream()
                 .map(Book::getName)
-                .toList());
+                .collect(Collectors.toSet()));
         return dto;
     }
 

@@ -4,9 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Table(name="books")
 @Entity
@@ -36,12 +34,12 @@ public class Book {
             , joinColumns = @JoinColumn(name="book_id", referencedColumnName="id")
             , inverseJoinColumns = @JoinColumn(name="author_id", referencedColumnName="id")
     )*/
-    private List<Author> authors;
+    private Set<Author> authors;
 
     public Book(){
     }
 
-    public Book(String name, int year, String filePath, List<Author> authors) {
+    public Book(String name, int year, String filePath, Set<Author> authors) {
         this.name = name;
         this.year = year;
         this.filePath = filePath;
@@ -49,19 +47,33 @@ public class Book {
     }
 
     public void addAuthorToBook(Author author){
-        if (authors == null) authors = new ArrayList<>();
+        if (authors == null) authors = new HashSet<>();
 
         authors.add(author);
+    }
+
+    public void removeAuthor(Author author){
+        authors.remove(author);
+    }
+    /**
+     * PreRemove метод.<br>
+     * Вызывается перед тем, как удалить сущность, <br>
+     * а следовательно удаляет все связи во вспомогательной таблице<br> */
+    @PreRemove
+    public void removeAuthorAssociations(){
+        for (Author a : this.authors){
+            a.getBooks().remove(this);
+        }
     }
 
     @Override
     public boolean equals(Object o) {
         if (!(o instanceof Book book)) return false;
-        return year == book.year && Objects.equals(name, book.name) && Objects.equals(filePath, book.filePath) && Objects.equals(authors, book.authors);
+        return year == book.year && Objects.equals(name, book.name) && Objects.equals(filePath, book.filePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name, year, filePath, authors);
+        return Objects.hash(name, year, filePath);
     }
 }

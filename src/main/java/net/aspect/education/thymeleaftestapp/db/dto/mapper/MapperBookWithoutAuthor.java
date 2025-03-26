@@ -6,6 +6,8 @@ import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * Мапер.
@@ -23,11 +25,11 @@ public class MapperBookWithoutAuthor implements Mapper<Book, BookDTO> {
         bookDTO.setYear(book.getYear());
         bookDTO.setFilePath(book.getFilePath());
 
-        List<String> authors = book
+        Set<String> authors = book
                 .getAuthors()
                 .stream()
                 .map(Author::getName)
-                .toList();
+                .collect(Collectors.toSet());
 
         bookDTO.setAuthorsName(authors);
 

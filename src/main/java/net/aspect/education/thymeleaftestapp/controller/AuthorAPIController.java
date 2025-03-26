@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+@SuppressWarnings("FieldCanBeLocal")
 @RestController
 @RequestMapping("/api/author")
 public class AuthorAPIController {

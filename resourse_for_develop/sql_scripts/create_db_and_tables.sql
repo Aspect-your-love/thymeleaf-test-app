@@ -1,5 +1,5 @@
 -- сначала создаём БД
-CREATE DATABASE bookshelf
+CREATE DATABASE bookshelf;
 -- создаём таблицы после создания БД bookshelf
 CREATE TABLE  books (
     id SERIAL,
