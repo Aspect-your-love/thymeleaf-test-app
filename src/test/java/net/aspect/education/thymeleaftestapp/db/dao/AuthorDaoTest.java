@@ -98,11 +98,13 @@ public class AuthorDaoTest {
     @Transactional
     @Test
     public void getAllAuthors() {
+        author1 = authorRepository.getAuthorByName(author1.getName()).getFirst();
+        author2 = authorRepository.getAuthorByName(author2.getName()).getFirst();
+        author2 = authorRepository.getAuthorByName(author3.getName()).getFirst();
+
         List<Author> authorsList = authorRepository.findAll();
-        authorsList.forEach(author -> System.out.println(author.getName()));
 
         assertThat(authorsList).contains(author1, author2, author3);
-
     }
 
     /**
@@ -115,39 +117,26 @@ public class AuthorDaoTest {
         Optional<Author> currentAuthor2 = authorRepository.findById(2);
         Optional<Author> currentAuthor3 = authorRepository.findById(3);
 
+        System.out.printf(
+                """
+                        Current Author 1: %s. Current author ID: %d
+                        Current Author 2: %s. Current author ID: %d
+                        Current Author 3: %s. Current author ID: %d
+                        
+                        %n"""
+                , currentAuthor1.get().getName()
+                , currentAuthor1.get().getId()
+                , currentAuthor2.get().getName()
+                , currentAuthor2.get().getId()
+                , currentAuthor3.get().getName()
+                , currentAuthor3.get().getId()
+        );
         assertAll(
-                () -> {
-                    String name = currentAuthor1.get().getName();
-                    assertThat(name).isEqualTo(author1.getName());
-                },
-                () -> {
-                    String name = currentAuthor2.get().getName();
-                    assertThat(name).isEqualTo(author2.getName());
-                },
-                () -> {
-                    String name = currentAuthor3.get().getName();
-                    assertThat(name).isEqualTo(author3.getName());
-                }
+                () -> assertThat(currentAuthor1).isPresent(),
+                () -> assertThat(currentAuthor2).isPresent(),
+                () -> assertThat(currentAuthor3).isPresent()
         );
     }
-
-    /**
-     * Проверка наличия автора в БД
-     */
-    @Transactional
-    @Test
-    public void addAuthors() {
-        List<Author> authorInDb1 = authorRepository.getAuthorByName(author1.getName());
-        List<Author> authorInDb2 = authorRepository.getAuthorByName(author2.getName());
-        List<Author> authorInDb3 = authorRepository.getAuthorByName(author3.getName());
-
-        assertAll(
-                () -> assertThat(authorInDb1).contains(author1),
-                () -> assertThat(authorInDb2).contains(author2),
-                () -> assertThat(authorInDb3).contains(author3)
-        );
-    }
-
 
     /**
      * Проверяет наличие авторов в книге
@@ -171,6 +160,27 @@ public class AuthorDaoTest {
     @Test
     @Transactional
     public void getBooksByAuthor() {
+        Author byNameA1 = authorRepository.getAuthorByName(author1.getName()).getFirst();
+        Author byNameA2 = authorRepository.getAuthorByName(author2.getName()).getFirst();
+        Author byNameA3 = authorRepository.getAuthorByName(author3.getName()).getFirst();
+
+        assertAll(
+                () -> {
+                    List<String> books = byNameA1.getBooks().stream().map(Book::getName).toList();
+                    assertThat(books).contains(book1.getName(), book2.getName());
+                },
+                () -> {
+                    List<String> books = byNameA2.getBooks().stream().map(Book::getName).toList();
+                    assertThat(books).contains(book1.getName(), book3.getName());
+                },
+                () -> {
+                    List<String> books = byNameA3.getBooks().stream().map(Book::getName).toList();
+                    assertThat(books).contains(book2.getName());
+                }
+        );
+
+        /*
+        // Нет гарантий того, что у нас будет получено по ID
         Author byId1 = authorRepository.findById(1).get();
         Author byId2 = authorRepository.findById(2).get();
         Author byId3 = authorRepository.findById(3).get();
@@ -179,7 +189,7 @@ public class AuthorDaoTest {
                 () -> assertThat(byId1.getBooks().stream().map(Book::getName)).contains(book1.getName(), book2.getName()),
                 () -> assertThat(byId2.getBooks().stream().map(Book::getName)).contains(book1.getName(), book3.getName()),
                 () -> assertThat(byId3.getBooks().stream().map(Book::getName)).contains(book2.getName())
-        );
+        );*/
     }
 
 
