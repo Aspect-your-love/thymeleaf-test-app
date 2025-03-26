@@ -3,6 +3,7 @@ package net.aspect.education.thymeleaftestapp.db.dao;
 import jakarta.transaction.Transactional;
 import net.aspect.education.thymeleaftestapp.db.dao.author.AuthorRepository;
 import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
+import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.junit.jupiter.api.*;
@@ -12,8 +13,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -34,6 +37,8 @@ public class AuthorDaoTest {
     private Book book1;
     private Book book2;
     private Book book3;
+    @Autowired
+    private MapperAuthor mapperAuthor;
 
     @Autowired
     public AuthorDaoTest(BookRepository bookRepository
@@ -121,8 +126,7 @@ public class AuthorDaoTest {
                 """
                         Current Author 1: %s. Current author ID: %d
                         Current Author 2: %s. Current author ID: %d
-                        Current Author 3: %s. Current author ID: %d
-                        
+                        Current Author 3: %s. Current author ID: %d                       \s
                         %n"""
                 , currentAuthor1.get().getName()
                 , currentAuthor1.get().getId()
@@ -178,19 +182,55 @@ public class AuthorDaoTest {
                     assertThat(books).contains(book2.getName());
                 }
         );
-
-        /*
-        // Нет гарантий того, что у нас будет получено по ID
-        Author byId1 = authorRepository.findById(1).get();
-        Author byId2 = authorRepository.findById(2).get();
-        Author byId3 = authorRepository.findById(3).get();
-
-        assertAll(
-                () -> assertThat(byId1.getBooks().stream().map(Book::getName)).contains(book1.getName(), book2.getName()),
-                () -> assertThat(byId2.getBooks().stream().map(Book::getName)).contains(book1.getName(), book3.getName()),
-                () -> assertThat(byId3.getBooks().stream().map(Book::getName)).contains(book2.getName())
-        );*/
     }
 
+    /**
+     * Проверяет добавление автора и связанных с ним
+     * книг*/
+    @Transactional
+    @Test
+    public void addAuthorWithBook(){
+        Author currentAuthor = new Author("Horus");
+
+        Book currentBook1 = new Book("Text-1", 2012, "/path-life.txt", new ArrayList<>());
+        currentBook1.addAuthorToBook(currentAuthor);
+        currentAuthor.addBookToAuthor(currentBook1);
+        Book currentBook2 = new Book("Text-2", 2015, "/path-life2.txt", new ArrayList<>());
+        currentBook2.addAuthorToBook(currentAuthor);
+        currentAuthor.addBookToAuthor(currentBook2);
+        Book currentBook3 = new Book("Text-3", 2019, "/path-life3.txt", new ArrayList<>());
+        currentBook3.addAuthorToBook(currentAuthor);
+        currentAuthor.addBookToAuthor(currentBook3);
+
+
+        Author returnAuthor = authorRepository.save(currentAuthor);
+
+        assertAll(
+                () -> assertThat(returnAuthor).isNotNull(),
+                () -> assertThat(returnAuthor.getBooks())
+                        .isNotEmpty().map(Book::getName)
+                        .contains(currentBook1.getName()
+                                , currentBook2.getName()
+                                , currentBook3.getName())
+        );
+    }
+
+    /**
+     * Изменение существующего автора*/
+    @Transactional
+    @Test
+    public void updateAuthor(){
+        Author currentAuthor = authorRepository.getAuthorByName(author1.getName()).getFirst();
+        currentAuthor.setName("Author From test UPDATE methode");
+        Author authorAfterUpdate = authorRepository.save(currentAuthor);
+
+        assertAll(
+                () ->assertThat(currentAuthor.getId()).isEqualTo(authorAfterUpdate.getId()),
+                () ->assertThat(currentAuthor.getName()).isEqualTo(authorAfterUpdate.getName())
+        );
+    }
+
+    /**
+     * Удаление автора из БД*/
 
 }
