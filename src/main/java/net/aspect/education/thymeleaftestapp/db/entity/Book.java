@@ -27,14 +27,15 @@ public class Book {
     @Column(name="link_file_description")
     private String filePath;
 
-    @ManyToMany(cascade = {CascadeType.DETACH
+    @ManyToMany(mappedBy = "books"
+            , cascade = {CascadeType.DETACH
             , CascadeType.MERGE
             , CascadeType.PERSIST
             , CascadeType.REFRESH})
-    @JoinTable(name="books_authors"
+    /*@JoinTable(name="books_authors"
             , joinColumns = @JoinColumn(name="book_id", referencedColumnName="id")
             , inverseJoinColumns = @JoinColumn(name="author_id", referencedColumnName="id")
-    )
+    )*/
     private List<Author> authors;
 
     public Book(){

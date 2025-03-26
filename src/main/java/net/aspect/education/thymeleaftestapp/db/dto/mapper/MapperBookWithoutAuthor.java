@@ -36,7 +36,7 @@ public class MapperBookWithoutAuthor implements Mapper<Book, BookDTO> {
 
     /**
      * Преобразует BookDTO в book.<br>
-     * Но не преобразует строковые имена авторов в объекты Author.<br>*/
+     * Не преобразует строковые имена авторов в объекты Author.<br>*/
     public Book toEntity(BookDTO bookDTO) {
         Book book = new Book();
         book.setName(bookDTO.getName());

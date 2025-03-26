@@ -23,16 +23,15 @@ public class Author {
     @Column(name = "name_author")
     private String name;
 
-    @ManyToMany(mappedBy = "authors"
-            , cascade = {CascadeType.DETACH
+    @ManyToMany(cascade = {CascadeType.DETACH
             , CascadeType.MERGE
             , CascadeType.PERSIST
             , CascadeType.REFRESH}
             , fetch = FetchType.EAGER)
-    /*@JoinTable(name="books_authors"
+    @JoinTable(name="books_authors"
             , joinColumns = @JoinColumn(name="author_id", referencedColumnName="id")
             , inverseJoinColumns = @JoinColumn(name="book_id", referencedColumnName="id")
-    )*/
+    )
     private List<Book> books;
 
     public Author(String name) {

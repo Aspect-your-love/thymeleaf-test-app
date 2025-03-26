@@ -39,8 +39,7 @@ public class BookServiceImpl implements BookService {
         List<Book> allBook = bookRepository.findAll();
         System.out.println("Были найдены книги: " + allBook);
 
-        List<BookDTO> bookDTOList =
-                allBook
+        List<BookDTO> bookDTOList = allBook
                         .stream()
                         .map(book -> mapperBookWithoutAuthor.toDTO(book))
                         .toList();
