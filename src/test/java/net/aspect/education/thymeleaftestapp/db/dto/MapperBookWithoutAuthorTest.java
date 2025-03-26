@@ -9,25 +9,27 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class MapperBookWithoutAuthorTest {
     private Book book1 ;
-    private List<Author> authors;
+    private Set<Author> authors;
     private final MapperBookWithoutAuthor mapperBookWithoutAuthor = new MapperBookWithoutAuthor();
     private BookDTO bookDTO;
 
     @BeforeEach
     public void beforeEach() {
-        authors = new ArrayList<>();
+        authors = new HashSet<>();
         authors.add(new Author("Шёлохов"));
 
         book1 = new Book("Тихий дон", 1888, "file_path.txt", authors);
         bookDTO = new BookDTO();
-        bookDTO.setAuthorsName(book1.getAuthors().stream().map(Author::getName).toList());
+        bookDTO.setAuthorsName(book1.getAuthors().stream().map(Author::getName).collect(Collectors.toSet()));
         bookDTO.setName(book1.getName());
         bookDTO.setYear(book1.getYear());
         bookDTO.setFilePath(book1.getFilePath());
@@ -51,8 +53,8 @@ public class MapperBookWithoutAuthorTest {
                 .getAuthors()
                 .stream()
                 .map(Author::getName)
-                .collect(Collectors.toList()));
-        book1.setAuthors(new ArrayList<>());
+                .collect(Collectors.toSet()));
+        book1.setAuthors(new HashSet<>());
 
         assertThat(mapperBookWithoutAuthor.toEntity(bookDTO)).isEqualTo(book1);
     }

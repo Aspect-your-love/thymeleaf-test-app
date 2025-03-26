@@ -13,9 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -192,13 +190,13 @@ public class AuthorDaoTest {
     public void addAuthorWithBook(){
         Author currentAuthor = new Author("Horus");
 
-        Book currentBook1 = new Book("Text-1", 2012, "/path-life.txt", new ArrayList<>());
+        Book currentBook1 = new Book("Text-1", 2012, "/path-life.txt", new HashSet<>());
         currentBook1.addAuthorToBook(currentAuthor);
         currentAuthor.addBookToAuthor(currentBook1);
-        Book currentBook2 = new Book("Text-2", 2015, "/path-life2.txt", new ArrayList<>());
+        Book currentBook2 = new Book("Text-2", 2015, "/path-life2.txt", new HashSet<>());
         currentBook2.addAuthorToBook(currentAuthor);
         currentAuthor.addBookToAuthor(currentBook2);
-        Book currentBook3 = new Book("Text-3", 2019, "/path-life3.txt", new ArrayList<>());
+        Book currentBook3 = new Book("Text-3", 2019, "/path-life3.txt", new HashSet<>());
         currentBook3.addAuthorToBook(currentAuthor);
         currentAuthor.addBookToAuthor(currentBook3);
 
@@ -232,5 +230,19 @@ public class AuthorDaoTest {
 
     /**
      * Удаление автора из БД*/
+    @Test
+    @Transactional
+    public void deleteAuthor(){
+        Author authorCurrent = authorRepository.findById(2).get();
 
+//        authorCurrent.getBooks().forEach();
+
+        authorCurrent.getBooks().forEach(book -> book.removeAuthor(authorCurrent));
+        authorCurrent.removeBookList();
+
+        authorRepository.delete(authorCurrent);
+        authorRepository.findAll().forEach(s -> System.out.println(s.getName()));
+
+        assertThat(authorRepository.findAll().size()).isEqualTo(2);
+    }
 }

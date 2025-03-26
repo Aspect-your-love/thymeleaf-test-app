@@ -14,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
@@ -39,7 +40,7 @@ public class AuthorMapperTest {
         String authorName = new String("Duma");
 
         author = new Author(authorName);
-        author.setBooks(new ArrayList<>());
+        author.setBooks(new HashSet<>());
         authorDto = new AuthorDTO();
         authorDto.setName(authorName);
     }
@@ -48,7 +49,7 @@ public class AuthorMapperTest {
     public void toAuthor(){
         Author newAuthor = mapper.toEntity(authorDto);
         //Добавляем книги текущему автору ИЗ РЕПОЗИТОРИЯ, если таковые есть
-        newAuthor.setBooks(new ArrayList<>());
+        newAuthor.setBooks(new HashSet<>());
 
         assertAll(
                 () -> assertThat(newAuthor.getName()).isEqualTo(authorDto.getName()),
