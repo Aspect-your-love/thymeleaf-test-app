@@ -57,25 +57,20 @@ public class AuthorDaoTest {
         book1.setYear(1970);
         book1.setFilePath("/file.path");
         book1.addAuthorToBook(author1);
-        author1.addBookToAuthor(book1);
         book1.addAuthorToBook(author2);
-        author2.addBookToAuthor(book1);
 
         book2 = new Book();
         book2.setName("Book-2");
         book2.setYear(1976);
         book2.setFilePath("/file.path2");
         book2.addAuthorToBook(author1);
-        author1.addBookToAuthor(book2);
         book2.addAuthorToBook(author3);
-        author3.addBookToAuthor(book2);
 
         book3 = new Book();
         book3.setName("Book-3");
         book3.setYear(1972);
         book3.setFilePath("/file.path2");
         book3.addAuthorToBook(author2);
-        author2.addBookToAuthor(book3);
 
         bookRepository.save(book1);
         bookRepository.save(book2);
@@ -192,13 +187,10 @@ public class AuthorDaoTest {
 
         Book currentBook1 = new Book("Text-1", 2012, "/path-life.txt", new HashSet<>());
         currentBook1.addAuthorToBook(currentAuthor);
-        currentAuthor.addBookToAuthor(currentBook1);
         Book currentBook2 = new Book("Text-2", 2015, "/path-life2.txt", new HashSet<>());
         currentBook2.addAuthorToBook(currentAuthor);
-        currentAuthor.addBookToAuthor(currentBook2);
         Book currentBook3 = new Book("Text-3", 2019, "/path-life3.txt", new HashSet<>());
         currentBook3.addAuthorToBook(currentAuthor);
-        currentAuthor.addBookToAuthor(currentBook3);
 
 
         Author returnAuthor = authorRepository.save(currentAuthor);
@@ -234,8 +226,6 @@ public class AuthorDaoTest {
     @Transactional
     public void deleteAuthor(){
         Author authorCurrent = authorRepository.findById(2).get();
-
-//        authorCurrent.getBooks().forEach();
 
         authorCurrent.getBooks().forEach(book -> book.removeAuthor(authorCurrent));
         authorCurrent.removeBookList();
