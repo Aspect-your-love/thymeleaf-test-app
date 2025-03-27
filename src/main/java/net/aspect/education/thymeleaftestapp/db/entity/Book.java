@@ -50,6 +50,8 @@ public class Book {
         if (authors == null) authors = new HashSet<>();
 
         authors.add(author);
+        if (author.getBooks() == null) author.setBooks(new HashSet<>());
+        author.getBooks().add(this);
     }
 
     public void removeAuthor(Author author){
