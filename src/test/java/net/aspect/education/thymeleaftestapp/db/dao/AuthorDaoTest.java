@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 @SpringBootTest(classes = {
         net.aspect.education.thymeleaftestapp.ThymeleafTestAppApplication.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Tag("author-dao")
 public class AuthorDaoTest {
 
     private final BookRepository bookRepository;
@@ -95,6 +96,7 @@ public class AuthorDaoTest {
     /// Получение всех авторов
     @Transactional
     @Test
+    @DisplayName("Получение всех авторов")
     public void getAllAuthors() {
         author1 = authorRepository.getAuthorByName(author1.getName()).getFirst();
         author2 = authorRepository.getAuthorByName(author2.getName()).getFirst();
@@ -110,6 +112,7 @@ public class AuthorDaoTest {
      */
     @Test
     @Transactional
+    @DisplayName("Получение автора по ID")
     public void getAuthorsById() {
         Optional<Author> currentAuthor1 = authorRepository.findById(1);
         Optional<Author> currentAuthor2 = authorRepository.findById(2);
@@ -140,6 +143,7 @@ public class AuthorDaoTest {
      */
     @Test
     @Transactional
+    @DisplayName("Получение автора из книги")
     public void getAuthorsInBook() {
         Book book1Get = bookRepository.getBookByName(book1.getName());
         Book book2Get = bookRepository.getBookByName(book2.getName());
@@ -156,6 +160,7 @@ public class AuthorDaoTest {
      * Получение всех книг автора*/
     @Test
     @Transactional
+    @DisplayName("Получение книг по имени автора")
     public void getBooksByAuthor() {
         Author byNameA1 = authorRepository.getAuthorByName(author1.getName()).getFirst();
         Author byNameA2 = authorRepository.getAuthorByName(author2.getName()).getFirst();
@@ -182,6 +187,7 @@ public class AuthorDaoTest {
      * книг*/
     @Transactional
     @Test
+    @DisplayName("Добавление автора вместе с книгой")
     public void addAuthorWithBook(){
         Author currentAuthor = new Author("Horus");
 
@@ -209,6 +215,7 @@ public class AuthorDaoTest {
      * Изменение существующего автора*/
     @Transactional
     @Test
+    @DisplayName("Обновление автора")
     public void updateAuthor(){
         Author currentAuthor = authorRepository.getAuthorByName(author1.getName()).getFirst();
         currentAuthor.setName("Author From test UPDATE methode");
@@ -224,6 +231,7 @@ public class AuthorDaoTest {
      * Удаление автора из БД*/
     @Test
     @Transactional
+    @DisplayName("Удаление автора")
     public void deleteAuthor(){
         Author authorCurrent = authorRepository.findById(2).get();
 

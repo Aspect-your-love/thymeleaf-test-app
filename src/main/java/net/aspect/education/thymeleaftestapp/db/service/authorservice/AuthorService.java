@@ -6,9 +6,4 @@ import java.util.List;
 
 
 public interface AuthorService {
-    List<Author> getAllAuthor();
-    Author getAuthorById(int id);
-    void saveOrUpdateAuthor(Author author);
-    void deleteAuthorById(int id);
-    List<Author> getAuthorByName(String name);
 }
