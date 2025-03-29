@@ -1,11 +1,6 @@
 package net.aspect.education.thymeleaftestapp.controller;
 
-import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
-import net.aspect.education.thymeleaftestapp.db.service.bookservice.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/book")

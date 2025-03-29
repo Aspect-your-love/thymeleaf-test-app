@@ -1,6 +1,5 @@
 package net.aspect.education.thymeleaftestapp.db.dto;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 

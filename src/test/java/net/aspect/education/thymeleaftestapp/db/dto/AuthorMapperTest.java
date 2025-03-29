@@ -1,16 +1,13 @@
 package net.aspect.education.thymeleaftestapp.db.dto;
 
-import net.aspect.education.thymeleaftestapp.db.dto.mapper.Mapper;
 import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
-import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 
 import static org.assertj.core.api.Assertions.*;

@@ -20,7 +20,6 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("FieldCanBeLocal")
 @ExtendWith(SpringExtension.class)

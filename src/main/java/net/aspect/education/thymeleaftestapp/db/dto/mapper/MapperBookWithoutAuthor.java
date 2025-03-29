@@ -5,7 +5,6 @@ import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
