@@ -12,7 +12,7 @@ import java.util.List;
 public class BookAPIController {
 
 
-    private final BookService bookService;
+    /*private final BookService bookService;
 
 
     @Autowired
@@ -39,5 +39,5 @@ public class BookAPIController {
     @DeleteMapping("/deleteBook/{id}")
     public void deleteBook(@PathVariable int id){
         bookService.deleteBookById(id);
-    }
+    }*/
 }

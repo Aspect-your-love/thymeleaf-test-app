@@ -14,7 +14,7 @@ import java.util.List;
 @RequestMapping("/api/author")
 public class AuthorAPIController {
 
-    private final AuthorServiceImpl authorServiceImpl;
+    /*private final AuthorServiceImpl authorServiceImpl;
 
     private final MapperBookWithoutAuthor mapperBookWithoutAuthor;
 
@@ -26,5 +26,5 @@ public class AuthorAPIController {
 
     public List<AuthorDTO> getAllAuthors(){
         return null;
-    }
+    }*/
 }
