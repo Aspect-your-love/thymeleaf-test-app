@@ -35,8 +35,6 @@ public class AuthorDaoTest {
     private Book book1;
     private Book book2;
     private Book book3;
-    @Autowired
-    private MapperAuthor mapperAuthor;
 
     @Autowired
     public AuthorDaoTest(BookRepository bookRepository

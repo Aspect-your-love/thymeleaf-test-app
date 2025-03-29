@@ -10,9 +10,12 @@ import java.util.stream.Collectors;
 @Component
 public class MapperAuthor implements Mapper<Author, AuthorDTO> {
 
+    /// Преобразует из Author в DTO. Содержит список книг
+    /// в строковом формате
     @Override
     public AuthorDTO toDTO(Author entity) {
         AuthorDTO dto = new AuthorDTO();
+        dto.setId(entity.getId());
         dto.setName(entity.getName());
         dto.setBookList(entity
                 .getBooks()
@@ -28,6 +31,9 @@ public class MapperAuthor implements Mapper<Author, AuthorDTO> {
      */
     @Override
     public Author toEntity(AuthorDTO dto) {
-        return new Author(dto.getName());
+        Author author = new Author();
+        author.setId(dto.getId());
+        author.setName(dto.getName());
+        return author;
     }
 }
