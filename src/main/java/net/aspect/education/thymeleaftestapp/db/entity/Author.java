@@ -18,7 +18,7 @@ public class Author {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "name_author")
+    @Column(name = "name_author", nullable = false, unique = true)
     private String name;
 
     @ManyToMany(cascade = {CascadeType.DETACH
@@ -62,5 +62,14 @@ public class Author {
     @Override
     public int hashCode() {
         return Objects.hashCode(name);
+    }
+
+    @Override
+    public String toString() {
+        return "Author{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", books= " + books.stream().map(Book::getName).toList() +
+                '}';
     }
 }

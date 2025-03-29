@@ -16,7 +16,7 @@ public class Book {
     @Column(name="id")
     private int id;
 
-    @Column(name="name_book")
+    @Column(name="name_book", unique = true, nullable = false)
     private String name;
 
     @Column(name="publication_year")
@@ -77,5 +77,16 @@ public class Book {
     @Override
     public int hashCode() {
         return Objects.hash(name, year, filePath);
+    }
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", year=" + year +
+                ", filePath='" + filePath + '\'' +
+                ", authors: " + authors.stream().map(Author::getName).toList() +
+                '}';
     }
 }
