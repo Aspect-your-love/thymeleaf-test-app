@@ -4,10 +4,7 @@ import net.aspect.education.thymeleaftestapp.db.dto.mapper.Mapper;
 import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AutoClose;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -46,6 +43,7 @@ public class AuthorMapperTest {
     }
 
     @Test
+    @DisplayName("Из DTO в Author")
     public void toAuthor(){
         Author newAuthor = mapper.toEntity(authorDto);
         //Добавляем книги текущему автору ИЗ РЕПОЗИТОРИЯ, если таковые есть
@@ -58,8 +56,8 @@ public class AuthorMapperTest {
     }
 
     @Test
+    @DisplayName("Из Author в DTO")
     public void toAuthorDTO() {
-//        TODO: реализовать
         AuthorDTO newAuthorDTO = mapper.toDTO(author);
 
         assertAll(
