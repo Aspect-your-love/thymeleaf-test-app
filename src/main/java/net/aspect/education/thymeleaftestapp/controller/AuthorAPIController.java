@@ -1,24 +1,50 @@
 package net.aspect.education.thymeleaftestapp.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import net.aspect.education.thymeleaftestapp.db.dto.AuthorDTO;
+import net.aspect.education.thymeleaftestapp.db.service.authorservice.AuthorServiceImpl;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
 @RestController
-@RequestMapping("/api/author")
+@RequestMapping("/api/authors")
 public class AuthorAPIController {
 
-    /*private final AuthorServiceImpl authorServiceImpl;
+    private final AuthorServiceImpl authorService;
 
-    private final MapperBookWithoutAuthor mapperBookWithoutAuthor;
-
-    @Autowired
-    public AuthorAPIController(AuthorServiceImpl authorServiceImpl, MapperBookWithoutAuthor mapperBookWithoutAuthor) {
-        this.authorServiceImpl = authorServiceImpl;
-        this.mapperBookWithoutAuthor = mapperBookWithoutAuthor;
+    public AuthorAPIController(AuthorServiceImpl authorService){
+        this.authorService = authorService;
     }
 
+    @GetMapping("/all")
     public List<AuthorDTO> getAllAuthors(){
-        return null;
-    }*/
+        return authorService.getAll();
+    }
+
+    @GetMapping("/{id}")
+    public AuthorDTO getAuthorByID(@PathVariable("id") int id){
+        return authorService.getById(id).get();
+    }
+
+    @GetMapping("/{name}")
+    public AuthorDTO getAuthorByName(@PathVariable("name") String name){
+        return authorService.getByName(name).get();
+    }
+
+    @PostMapping
+    public AuthorDTO addAuthor(AuthorDTO authorDTO){
+        return authorService.addAuthor(authorDTO);
+    }
+
+    @PutMapping
+    public AuthorDTO updateAuthor(AuthorDTO authorDTO){
+        return authorService.updateAuthor(authorDTO);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAuthor(@PathVariable("id") int id){
+        authorService.deleteAuthor(id);
+    }
+
 }

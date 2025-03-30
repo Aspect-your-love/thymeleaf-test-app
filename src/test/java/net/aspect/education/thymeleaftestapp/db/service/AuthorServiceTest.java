@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -150,8 +151,8 @@ public class AuthorServiceTest {
     @DisplayName("Добавление автора с книгами")
     public void addAuthor() {
         Author currentAuthor = new Author("Ksue Butenko");
-        currentAuthor.addBookToAuthor(book1);
-        currentAuthor.addBookToAuthor(book3);
+        Book book4 = new Book("My Love", 2026, "/filePath.txt", null);
+        currentAuthor.addBookToAuthor(book4);
 
         authorService.addAuthor(mapper.toDTO(currentAuthor));
 
@@ -165,7 +166,7 @@ public class AuthorServiceTest {
 
         assertAll(
                 () -> assertThat(aD.getName()).isEqualTo(currentAuthor.getName()),
-                () -> assertThat(aD.getBookList()).contains(book1.getName(), book3.getName())
+                () -> assertThat(aD.getBookList()).contains(book4.getName())
         );
     }
 
