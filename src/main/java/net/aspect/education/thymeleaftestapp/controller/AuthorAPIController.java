@@ -22,12 +22,12 @@ public class AuthorAPIController {
         return authorService.getAll();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/byId/{id}")
     public AuthorDTO getAuthorByID(@PathVariable("id") int id){
         return authorService.getById(id).get();
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/byName/{name}")
     public AuthorDTO getAuthorByName(@PathVariable("name") String name){
         return authorService.getByName(name).get();
     }
