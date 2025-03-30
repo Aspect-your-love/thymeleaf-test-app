@@ -4,10 +4,10 @@ import jakarta.transaction.Transactional;
 import net.aspect.education.thymeleaftestapp.db.dao.author.AuthorRepository;
 import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
 import net.aspect.education.thymeleaftestapp.db.dto.AuthorDTO;
+import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import net.aspect.education.thymeleaftestapp.db.service.authorservice.AuthorService;
-import net.aspect.education.thymeleaftestapp.db.service.authorservice.AuthorServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Tag;
@@ -21,16 +21,21 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertAll;
+import static org.junit.jupiter.api.Assertions.fail;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {
         net.aspect.education.thymeleaftestapp.ThymeleafTestAppApplication.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
-@Tag("author-dao")
+@Tag("author-service")
 public class AuthorServiceTest {
 
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final AuthorService authorService;
+    private final MapperAuthor mapper;
 
     private Author author1;
     private Author author2;
@@ -43,10 +48,12 @@ public class AuthorServiceTest {
     @Autowired
     public AuthorServiceTest(BookRepository bookRepository
             , AuthorRepository authorRepository
-            , AuthorService authorService) {
+            , AuthorService authorService
+            , MapperAuthor mapper) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.authorService = authorService;
+        this.mapper = mapper;
     }
 
     @BeforeEach
@@ -83,40 +90,108 @@ public class AuthorServiceTest {
     }
 
 
+    @Test
     @DisplayName("Получение всех авторов со списком книг")
     public void getAllAuthorsWithBook() {
         List<AuthorDTO> authorsList = authorService.getAll();
 
+        assertAll(
+                () -> {
+                    authorsList.forEach(System.out::println);
+                    assertThat(authorsList).containsAnyOf(mapper.toDTO(author1)
+                            , mapper.toDTO(author2)
+                            , mapper.toDTO(author3));
+                },
+                () -> {
+                    AuthorDTO currentAuthor = authorsList.getFirst();
+                    assertThat(currentAuthor.getBookList()).isNotEmpty().containsAnyOf("Book-1", "Book-2", "Book-3");
+                }
+        );
 
     }
 
+    @Test
     @DisplayName("Получение одного автора по ID")
     public void getAuthorById() {
         int idForTest = 1;
         Optional<AuthorDTO> byId = authorService.getById(idForTest);
+
+        assertAll(
+                () -> assertThat(byId).isPresent(),
+                () -> {
+                    if (byId.isEmpty()) fail("AuthorDTO не представлено");
+                    System.out.printf(
+                            """
+                                    Name author: %s
+                                    Book list: %s
+                                    """,
+                            byId.get().getName(),
+                            byId.get().getBookList()
+                    );
+                    assertThat(byId.get().getBookList()).isNotEmpty().containsAnyOf("Book-1", "Book-2", "Book-3");
+                }
+        );
     }
 
+    @Test
     @DisplayName("Получение автора по имени")
     public void getAuthorByName() {
         Optional<AuthorDTO> byName = authorService.getByName(author1.getName());
+
+        if (byName.isEmpty()) fail("Optional пустой");
+
+        assertAll(
+                () -> assertThat(byName.get().getName()).isEqualTo(author1.getName()),
+                () -> assertThat(byName.get().getBookList()).containsAnyOf("Book-1", "Book-2", "Book-3")
+        );
     }
 
+    @Test
     @DisplayName("Добавление автора с книгами")
     public void addAuthor() {
-        AuthorDTO thisAuthor = new AuthorDTO();
-        /*TODO: реализовать DTO*/
-        authorService.addAuthor(thisAuthor);
+        Author currentAuthor = new Author("Ksue Butenko");
+        currentAuthor.addBookToAuthor(book1);
+        currentAuthor.addBookToAuthor(book3);
+
+        authorService.addAuthor(mapper.toDTO(currentAuthor));
+
+        Optional<AuthorDTO> currentAuthorDTOReturning = authorService.getByName(currentAuthor.getName());
+
+        if (currentAuthorDTOReturning.isEmpty()) fail("Автор не был сохранён и был возвращён пустой Optional");
+
+        AuthorDTO aD = currentAuthorDTOReturning.get();
+
+        System.out.println(aD);
+
+        assertAll(
+                () -> assertThat(aD.getName()).isEqualTo(currentAuthor.getName()),
+                () -> assertThat(aD.getBookList()).contains(book1.getName(), book3.getName())
+        );
     }
 
+    @Test
     @DisplayName("Удаление автора")
     public void deleteAuthor() {
-
         authorService.deleteAuthor(1);
+
+        assertThat(authorService.getById(1)).isNotPresent();
     }
 
+    @Test
     @DisplayName("Обновление информации об авторе")
     public void updateAuthor() {
-        AuthorDTO authorDTOTest;
-        authorService.updateAuthor(authorDTOTest);
+        Optional<AuthorDTO> authorDTOTestOptional = authorService.getById(1);
+
+        if (authorDTOTestOptional.isEmpty()) fail("Указанный Author не вернулся....");
+
+        AuthorDTO authorDTOTest = authorDTOTestOptional.get();
+
+        authorDTOTest.setName("New Name For Test");
+
+        System.out.println(authorDTOTest);
+
+        AuthorDTO ret = authorService.updateAuthor(authorDTOTest);
+
+        assertThat(ret.getName()).isEqualTo(authorDTOTest.getName());
     }
 }
