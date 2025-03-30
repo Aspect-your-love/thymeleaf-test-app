@@ -1,19 +1,25 @@
 package net.aspect.education.thymeleaftestapp.db.dto;
 
-import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-import java.util.List;
 import java.util.Set;
 
 
 public class AuthorDTO {
+    /// ID в бд
+    private int id;
+
     /// Имя автора
     private String name;
+
     /// Названия книг, которые написаны автором
     private Set<String> bookList;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;

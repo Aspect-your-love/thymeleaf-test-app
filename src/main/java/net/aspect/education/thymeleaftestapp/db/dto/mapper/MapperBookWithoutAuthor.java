@@ -5,7 +5,6 @@ import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -21,6 +20,7 @@ public class MapperBookWithoutAuthor implements Mapper<Book, BookDTO> {
      * Также, преобразует авторов в список имён (String)*/
     public BookDTO toDTO(Book book) {
         BookDTO bookDTO = new BookDTO();
+        bookDTO.setId(book.getId());
         bookDTO.setName(book.getName());
         bookDTO.setYear(book.getYear());
         bookDTO.setFilePath(book.getFilePath());
@@ -41,6 +41,7 @@ public class MapperBookWithoutAuthor implements Mapper<Book, BookDTO> {
      * Не преобразует строковые имена авторов в объекты Author.<br>*/
     public Book toEntity(BookDTO bookDTO) {
         Book book = new Book();
+        book.setId(bookDTO.getId());
         book.setName(bookDTO.getName());
         book.setYear(bookDTO.getYear());
         book.setFilePath(bookDTO.getFilePath());

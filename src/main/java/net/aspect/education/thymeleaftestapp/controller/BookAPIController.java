@@ -1,18 +1,13 @@
 package net.aspect.education.thymeleaftestapp.controller;
 
-import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
-import net.aspect.education.thymeleaftestapp.db.service.bookservice.BookService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/book")
 public class BookAPIController {
 
 
-    private final BookService bookService;
+    /*private final BookService bookService;
 
 
     @Autowired
@@ -39,5 +34,5 @@ public class BookAPIController {
     @DeleteMapping("/deleteBook/{id}")
     public void deleteBook(@PathVariable int id){
         bookService.deleteBookById(id);
-    }
+    }*/
 }

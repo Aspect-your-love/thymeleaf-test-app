@@ -1,14 +1,24 @@
 package net.aspect.education.thymeleaftestapp.db.dto;
 
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
 public class BookDTO {
+    private int id;
+
     private String name;
+
     private int year;
     private String filePath;
     private Set<String> authorsName;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public Set<String> getAuthorsName() {
         return authorsName;

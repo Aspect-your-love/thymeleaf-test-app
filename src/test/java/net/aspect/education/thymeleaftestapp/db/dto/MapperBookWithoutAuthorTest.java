@@ -3,19 +3,15 @@ package net.aspect.education.thymeleaftestapp.db.dto;
 import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperBookWithoutAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
+@Tag("mapping")
 public class MapperBookWithoutAuthorTest {
     private Book book1 ;
     private Set<Author> authors;
@@ -41,9 +37,8 @@ public class MapperBookWithoutAuthorTest {
         book1 = null;
     }
 
-
-    @Disabled
     @Test
+    @DisplayName("Из DTO в book")
     public void testMappingToBook(){
         BookDTO bookDTO = new BookDTO();
         bookDTO.setName(book1.getName());
@@ -59,8 +54,9 @@ public class MapperBookWithoutAuthorTest {
         assertThat(mapperBookWithoutAuthor.toEntity(bookDTO)).isEqualTo(book1);
     }
 
-    @Disabled
+
     @Test
+    @DisplayName("Из Book в DTO")
     public void testMappingToBookDTO(){
         BookDTO bookDTOTest = mapperBookWithoutAuthor.toDTO(book1);
         assertThat(bookDTOTest).isEqualTo(bookDTO);

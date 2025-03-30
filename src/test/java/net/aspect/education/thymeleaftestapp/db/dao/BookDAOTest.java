@@ -7,10 +7,7 @@ import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
 import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,13 +20,13 @@ import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertAll;
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @SuppressWarnings("FieldCanBeLocal")
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes = {
         ThymeleafTestAppApplication.class})
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Tag("book-dao")
 public class BookDAOTest {
 
     private final BookRepository bookRepository;
