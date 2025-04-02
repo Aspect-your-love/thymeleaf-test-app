@@ -13,7 +13,6 @@ import java.util.HashSet;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertAll;
 
-// TODO: протестировать маппер для Author
 @ExtendWith(SpringExtension.class)
 @SpringBootTest(classes={
         net.aspect.education.thymeleaftestapp.ThymeleafTestAppApplication.class})
