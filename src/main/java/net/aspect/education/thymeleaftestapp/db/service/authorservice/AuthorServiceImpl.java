@@ -12,6 +12,7 @@ import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -70,6 +71,8 @@ public class AuthorServiceImpl implements AuthorService {
         Author currentAuthor = mapper.toEntity(author);
 
         Set<String> books = author.getBookList();
+
+        if (books == null) books = new HashSet<>();
 
         for(String s : books){
             Book findBook = bookRepository.getBookByName(s);

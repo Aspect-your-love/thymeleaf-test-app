@@ -1,6 +1,7 @@
 package net.aspect.education.thymeleaftestapp.db.service.authorservice;
 
 import net.aspect.education.thymeleaftestapp.db.dto.AuthorDTO;
+import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -17,4 +18,6 @@ public interface AuthorService {
     void deleteAuthor(int id);
 
     AuthorDTO updateAuthor(AuthorDTO authorDTO);
+
+//    AuthorDTO addBookToAuthor(BookDTO dto);
 }

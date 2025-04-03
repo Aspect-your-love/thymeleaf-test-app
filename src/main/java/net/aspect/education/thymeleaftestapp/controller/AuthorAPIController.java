@@ -33,7 +33,7 @@ public class AuthorAPIController {
     }
 
     @PostMapping
-    public AuthorDTO addAuthor(AuthorDTO authorDTO){
+    public AuthorDTO addAuthor(@RequestBody AuthorDTO authorDTO){
         return authorService.addAuthor(authorDTO);
     }
 

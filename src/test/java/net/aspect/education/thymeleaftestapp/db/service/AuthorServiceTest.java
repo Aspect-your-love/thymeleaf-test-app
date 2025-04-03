@@ -6,6 +6,7 @@ import net.aspect.education.thymeleaftestapp.db.dao.author.AuthorRepository;
 import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
 import net.aspect.education.thymeleaftestapp.db.dto.AuthorDTO;
 import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperAuthor;
+import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperBookWithoutAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import net.aspect.education.thymeleaftestapp.db.service.authorservice.AuthorService;
@@ -47,6 +48,8 @@ public class AuthorServiceTest {
     private Book book1;
     private Book book2;
     private Book book3;
+    @Autowired
+    private MapperBookWithoutAuthor mapperBookWithoutAuthor;
 
     @Autowired
     public AuthorServiceTest(BookRepository bookRepository
@@ -210,4 +213,15 @@ public class AuthorServiceTest {
 
         assertThat(ret.getName()).isEqualTo(authorDTOTest.getName());
     }
+
+    // TODO: Реализовать метод добавления книги к автору
+    /*@DisplayName("Добавление книги к определённому автору")
+    public void addBookToAuthor(){
+        Book newBook = new Book();
+        newBook.setFilePath("/newFilePath.txt");
+        newBook.setName("Какая-то книга");
+        newBook.setYear(2000);
+
+        AuthorDTO authorRet = authorService.addBookToAuthor(mapperBookWithoutAuthor.toDTO(newBook));
+    }*/
 }

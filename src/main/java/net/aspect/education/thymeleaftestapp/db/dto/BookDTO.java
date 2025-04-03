@@ -5,9 +5,7 @@ import java.util.Set;
 
 public class BookDTO {
     private int id;
-
     private String name;
-
     private int year;
     private String filePath;
     private Set<String> authorsName;
