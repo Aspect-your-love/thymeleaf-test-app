@@ -1,5 +1,6 @@
 package net.aspect.education.thymeleaftestapp.db.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.transaction.Transactional;
 import net.aspect.education.thymeleaftestapp.db.dao.author.AuthorRepository;
 import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
@@ -18,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -116,6 +119,14 @@ public class AuthorServiceTest {
     public void getAuthorById() {
         int idForTest = 1;
         Optional<AuthorDTO> byId = authorService.getById(idForTest);
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        try {
+            objectMapper.writeValue(new File("resourse_for_develop/JSONs/author-dto.json"), byId.get());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         assertAll(
                 () -> assertThat(byId).isPresent(),

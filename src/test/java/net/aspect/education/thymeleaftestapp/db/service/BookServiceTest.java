@@ -5,6 +5,7 @@ import net.aspect.education.thymeleaftestapp.db.dao.author.AuthorRepository;
 import net.aspect.education.thymeleaftestapp.db.dao.book.BookRepository;
 import net.aspect.education.thymeleaftestapp.db.dto.BookDTO;
 import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperAuthor;
+import net.aspect.education.thymeleaftestapp.db.dto.mapper.MapperBookWithoutAuthor;
 import net.aspect.education.thymeleaftestapp.db.entity.Author;
 import net.aspect.education.thymeleaftestapp.db.entity.Book;
 import net.aspect.education.thymeleaftestapp.db.service.authorservice.AuthorService;
@@ -35,7 +36,7 @@ public class BookServiceTest {
     private final BookRepository bookRepository;
     private final AuthorRepository authorRepository;
     private final BookService bookService;
-    private final MapperAuthor mapper;
+    private final MapperBookWithoutAuthor mapper;
 
     private Author author1;
     private Author author2;
@@ -49,7 +50,7 @@ public class BookServiceTest {
     public BookServiceTest(BookRepository bookRepository
             , AuthorRepository authorRepository
             , BookService bookService
-            , MapperAuthor mapper) {
+            , MapperBookWithoutAuthor mapper) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
         this.bookService = bookService;
@@ -101,10 +102,13 @@ public class BookServiceTest {
     }
 
     /*Получение книги по ID*/
+    @Test
+    @DisplayName("Получение книги по ID")
     public void getBooksById(){
         BookDTO byId = bookService.getById(1);
         BookDTO byId1 = bookService.getById(2);
         BookDTO byId2 = bookService.getById(3);
+
 
         assertAll(
                 () -> assertThat(byId).extracting(BookDTO::getName).isIn(book1.getName(), book2.getName(), book3.getName()),
@@ -114,6 +118,8 @@ public class BookServiceTest {
     }
 
     /*Exception при неправильном ID*/
+    @Test
+    @DisplayName("Exception not found {id}")
     public void getBooksByIdWithNotExistId(){
         try{
             bookService.getById(10000);
@@ -123,6 +129,8 @@ public class BookServiceTest {
     }
 
     /*Получение книги по имени*/
+    @Test
+    @DisplayName("Получение книги по имени")
     public void getBooksByName(){
         BookDTO byName = bookService.getByName(book1.getName());
         BookDTO byName1 = bookService.getByName(book2.getName());
@@ -136,6 +144,8 @@ public class BookServiceTest {
     }
 
     /*Exception при неправильном Book.name*/
+    @Test
+    @DisplayName("Exception not found {name}")
     public void getBooksByIdWithNotExistName(){
         try{
             bookService.getByName("такого-автора-не-существует");
@@ -145,9 +155,53 @@ public class BookServiceTest {
     }
 
     /*Добавление книги*/
+    @Test
+    @DisplayName("Добавление книги")
+    public void addBook(){
+        BookDTO currentBook = new BookDTO();
+        currentBook.setName("Silent hill");
+        currentBook.setYear(2001);
+        currentBook.setFilePath("/file2.path");
+
+        BookDTO returningBook = bookService.addBook(currentBook);
+
+        assertAll(
+                () -> assertThat(returningBook)
+                        .isNotNull()
+                        .extracting(returningBook.getName())
+                        .isEqualTo(currentBook.getName())
+        );
+    }
 
     /*Удаление книги*/
+    @Test
+    @DisplayName("Удаление книги")
+    public void deleteBook(){
+        bookService.deleteBook(1);
+
+        try{
+            BookDTO byId = bookService.getById(1);
+        } catch(NullPointerException e){
+            assertTrue(true);
+        }
+    }
 
     /*Обновление информации о книге*/
+    @Test
+    @DisplayName("Обновление информации о книге")
+    public void updateBook(){
+        BookDTO byId = bookService.getById(1);
+        byId.setName("Update-name");
+        byId.setYear(0);
+
+        Book book = mapper.toEntity(byId);
+
+        Book bookUpdate = bookService.updateBook(book);
+
+        assertAll(
+                () -> assertThat(bookUpdate).isNotNull().extracting(bookUpdate.getName()).isEqualTo(byId.getName()).extracting(String.valueOf(bookUpdate.getId())).isEqualTo(String.valueOf(byId.getId()))
+        );
+
+    }
 
 }

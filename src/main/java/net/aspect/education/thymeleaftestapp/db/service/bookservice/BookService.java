@@ -12,4 +12,10 @@ public interface BookService {
     BookDTO getById(int i);
 
     BookDTO getByName(String name);
+
+    BookDTO addBook(BookDTO currentBook);
+
+    void deleteBook(int i);
+
+    Book updateBook(Book book);
 }
