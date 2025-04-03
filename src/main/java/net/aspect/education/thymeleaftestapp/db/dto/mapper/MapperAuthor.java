@@ -17,11 +17,15 @@ public class MapperAuthor implements Mapper<Author, AuthorDTO> {
         AuthorDTO dto = new AuthorDTO();
         dto.setId(entity.getId());
         dto.setName(entity.getName());
-        dto.setBookList(entity
-                .getBooks()
-                .stream()
-                .map(Book::getName)
-                .collect(Collectors.toSet()));
+
+        if (entity.getBooks() != null) {
+            dto.setBookList(entity
+                    .getBooks()
+                    .stream()
+                    .map(Book::getName)
+                    .collect(Collectors.toSet()));
+        }
+
         return dto;
     }
 

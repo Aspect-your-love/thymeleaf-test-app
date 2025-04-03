@@ -25,14 +25,15 @@ public class MapperBookWithoutAuthor implements Mapper<Book, BookDTO> {
         bookDTO.setYear(book.getYear());
         bookDTO.setFilePath(book.getFilePath());
 
-        Set<String> authors = book
-                .getAuthors()
-                .stream()
-                .map(Author::getName)
-                .collect(Collectors.toSet());
+        if (book.getAuthors() != null) {
+            Set<String> authors = book
+                    .getAuthors()
+                    .stream()
+                    .map(Author::getName)
+                    .collect(Collectors.toSet());
 
-        bookDTO.setAuthorsName(authors);
-
+            bookDTO.setAuthorsName(authors);
+        }
         return bookDTO;
     }
 

@@ -17,5 +17,5 @@ public interface BookService {
 
     void deleteBook(int i);
 
-    Book updateBook(Book book);
+    BookDTO updateBook(BookDTO book);
 }

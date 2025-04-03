@@ -104,7 +104,7 @@ public class BookServiceTest {
     /*Получение книги по ID*/
     @Test
     @DisplayName("Получение книги по ID")
-    public void getBooksById(){
+    public void getBooksById() {
         BookDTO byId = bookService.getById(1);
         BookDTO byId1 = bookService.getById(2);
         BookDTO byId2 = bookService.getById(3);
@@ -120,10 +120,10 @@ public class BookServiceTest {
     /*Exception при неправильном ID*/
     @Test
     @DisplayName("Exception not found {id}")
-    public void getBooksByIdWithNotExistId(){
-        try{
+    public void getBooksByIdWithNotExistId() {
+        try {
             bookService.getById(10000);
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             assertTrue(true);
         }
     }
@@ -131,7 +131,7 @@ public class BookServiceTest {
     /*Получение книги по имени*/
     @Test
     @DisplayName("Получение книги по имени")
-    public void getBooksByName(){
+    public void getBooksByName() {
         BookDTO byName = bookService.getByName(book1.getName());
         BookDTO byName1 = bookService.getByName(book2.getName());
         BookDTO byName2 = bookService.getByName(book3.getName());
@@ -146,10 +146,10 @@ public class BookServiceTest {
     /*Exception при неправильном Book.name*/
     @Test
     @DisplayName("Exception not found {name}")
-    public void getBooksByIdWithNotExistName(){
-        try{
+    public void getBooksByIdWithNotExistName() {
+        try {
             bookService.getByName("такого-автора-не-существует");
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             assertTrue(true);
         }
     }
@@ -157,7 +157,7 @@ public class BookServiceTest {
     /*Добавление книги*/
     @Test
     @DisplayName("Добавление книги")
-    public void addBook(){
+    public void addBook() {
         BookDTO currentBook = new BookDTO();
         currentBook.setName("Silent hill");
         currentBook.setYear(2001);
@@ -168,7 +168,7 @@ public class BookServiceTest {
         assertAll(
                 () -> assertThat(returningBook)
                         .isNotNull()
-                        .extracting(returningBook.getName())
+                        .extracting(BookDTO::getName)
                         .isEqualTo(currentBook.getName())
         );
     }
@@ -176,12 +176,12 @@ public class BookServiceTest {
     /*Удаление книги*/
     @Test
     @DisplayName("Удаление книги")
-    public void deleteBook(){
+    public void deleteBook() {
         bookService.deleteBook(1);
 
-        try{
+        try {
             BookDTO byId = bookService.getById(1);
-        } catch(NullPointerException e){
+        } catch (NullPointerException e) {
             assertTrue(true);
         }
     }
@@ -189,17 +189,20 @@ public class BookServiceTest {
     /*Обновление информации о книге*/
     @Test
     @DisplayName("Обновление информации о книге")
-    public void updateBook(){
+    public void updateBook() {
         BookDTO byId = bookService.getById(1);
         byId.setName("Update-name");
         byId.setYear(0);
 
-        Book book = mapper.toEntity(byId);
-
-        Book bookUpdate = bookService.updateBook(book);
+        BookDTO bookUpdate = bookService.updateBook(byId);
 
         assertAll(
-                () -> assertThat(bookUpdate).isNotNull().extracting(bookUpdate.getName()).isEqualTo(byId.getName()).extracting(String.valueOf(bookUpdate.getId())).isEqualTo(String.valueOf(byId.getId()))
+                () -> assertThat(bookUpdate)
+                        .isNotNull()
+                        .extracting(BookDTO::getName)
+                        .isEqualTo(byId.getName()),
+                () -> assertThat(bookUpdate).extracting(BookDTO::getId)
+                        .isEqualTo(byId.getId())
         );
 
     }
